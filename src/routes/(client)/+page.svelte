@@ -37,8 +37,8 @@
 			<h2 class="text-6xl font-universio max-w-xs">Partner with us</h2>
 			<p>Become our partner and buy Shares.</p>
 			<div class="flex gap-6 text-black">
-				<button class="bg-egreen px-6 py-1.5 rounded-full">Join us</button>
-				<button class="bg-egreen px-6 py-1.5 rounded-full">Sign in</button>
+				<a href="/auth/signup" class="bg-egreen px-6 py-1.5 rounded-full">Join us</a>
+				<a href="/auth/login" class="bg-egreen px-6 py-1.5 rounded-full">Sign in</a>
 			</div>
 		</div>
 		<div class="md:mt-0 mt-5">
