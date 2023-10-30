@@ -23,12 +23,12 @@ export const showToastr = (message: string, type: ToastType) => {
 		} else if (type === 'info') {
 			// Blue background with white text
 			toast(message, {
-				style: 'background: #7d7878; color: #111111;',
+				style: 'background: #bab6b6; color: #111111;',
 				position: 'bottom-right'
 			});
 		} else {
 			toast(message, {
-				style: 'background: #7d7878; color: #111111;',
+				style: 'background: #bab6b6; color: #111111;',
 				position: 'bottom-right'
 			});
 		}

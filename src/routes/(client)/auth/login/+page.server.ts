@@ -3,6 +3,7 @@ import type { PageServerLoad } from './$types';
 import { z } from 'zod';
 import { auth } from '$lib/server/lucia';
 import { LuciaError } from 'lucia';
+import { fetchUser } from '../../../../lib/server/helpers';
 
 export const load = (async () => {
 	return {};
@@ -46,9 +47,11 @@ export const actions: Actions = {
 			});
 			locals.auth.setSession(session);
 
+			const user = await fetchUser(key.userId);
+
 			return {
 				success: true,
-				user: session.user
+				user
 			};
 		} catch (error) {
 			let toSend = {

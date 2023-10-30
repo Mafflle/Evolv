@@ -1,4 +1,5 @@
 import prisma from '$lib/server/prisma';
+import { fetchUser } from '../lib/server/helpers';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals }) => {
@@ -6,18 +7,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	let user = null;
 
 	if (session?.user) {
-		user = await prisma.user.findUnique({
-			where: {
-				id: session.user.userId
-			},
-			include: {
-				orders: {
-					include: {
-						items: true
-					}
-				}
-			}
-		});
+		user = await fetchUser(session.user.userId);
 	}
 
 	return {

@@ -296,6 +296,7 @@
 
 	.nav-item.active {
 		color: #762ebb;
+		background-color: transparent;
 	}
 
 	.nav-item:hover {

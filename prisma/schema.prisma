@@ -27,7 +27,8 @@ model User {
   auth_session Session[]
   key          Key[]
 
-  orders Order[]
+  orders     Order[]
+  favourites Product[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -133,6 +134,8 @@ model Product {
   variants   Variant[]
   category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   categoryId String?
+
+  users User[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")

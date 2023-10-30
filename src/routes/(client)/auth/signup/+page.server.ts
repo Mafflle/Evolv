@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { auth } from '$lib/server/lucia';
 import { Role } from '$lib/types/roles.types';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { fetchUser, fetchUser } from '../../../../lib/server/helpers';
 
 export const load = (async () => {
 	return {};
@@ -78,9 +79,11 @@ export const actions: Actions = {
 
 			locals.auth.setSession(session);
 
+			const fetchedUser = await fetchUser(user.userId);
+
 			return {
 				success: true,
-				user: session.user
+				user: fetchedUser
 			};
 		} catch (e) {
 			let toSend = {
