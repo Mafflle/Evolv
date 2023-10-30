@@ -29,7 +29,7 @@ const MAX_FILE_SIZE = 5000000;
 
 const schema = z.object({
 	name: z.string({ required_error: 'Category name is required' }).trim(),
-	description: z.string({ required_error: 'Category name is required' }).trim(),
+	description: z.string({ required_error: 'Category description is required' }).trim(),
 	featuredImage: z
 		.any()
 		.refine((image) => image.size < MAX_FILE_SIZE, 'Image is too large')
@@ -41,7 +41,7 @@ const schema = z.object({
 
 const editSchema = z.object({
 	name: z.string({ required_error: 'Category name is required' }).trim(),
-	description: z.string({ required_error: 'Category name is required' }).trim(),
+	description: z.string({ required_error: 'Category description is required' }).trim(),
 	featuredImage: z
 		.any()
 		.optional()

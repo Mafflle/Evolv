@@ -73,7 +73,7 @@
 			<label class="font-medium font-work-sans" for="confirmPassword">Confirm Password</label>
 			<input
 				class="w-full py-2.5 px-3 border focus:outline-none"
-				type="confirmPassword"
+				type="password"
 				name="confirmPassword"
 				id="confirmPassword"
 			/>

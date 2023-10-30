@@ -151,7 +151,7 @@
 		action="?/manageVariant"
 		method="post"
 		enctype="multipart/form-data"
-		class="min-w-[70vh] mt-10 grid md:grid-cols-2 grid-cols-1 gap-5"
+		class="w-full mt-10 grid md:grid-cols-2 grid-cols-1 gap-5"
 		use:enhance={() => {
 			loading = true;
 			return async ({ result, update }) => {
