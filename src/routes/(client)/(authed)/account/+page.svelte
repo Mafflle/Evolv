@@ -5,6 +5,7 @@
 	import { formatCurrency, showToastr } from '$lib/utils';
 	import { enhance } from '$app/forms';
 	import AccordionComponent from '$lib/components/AccordionComponent.svelte';
+	import OrderItem from '../../../../lib/components/OrderItem.svelte';
 
 	export let data: PageData;
 	export let form;
@@ -87,7 +88,7 @@
 		</nav>
 	</aside>
 	<section
-		class="relative w-full p-10 max-h-screen overflow-y-scroll px-3 {currentTab ===
+		class="relative w-full p-10 max-h-screen bg-[white] overflow-y-scroll px-3 {currentTab ===
 			'order-history' && ''}"
 	>
 		{#if currentTab === 'account'}
@@ -206,50 +207,13 @@
 						<p>More</p>
 					</div>
 					{#if orders && orders.length > 0}
-						<div class="grid grid-cols-1 gap-6 pb-5">
+						<div class="grid grid-cols-1 gap-10 pb-5">
 							{#each orders as order}
-								<AccordionComponent date={order.createdAt} {order} title={order.id}>
+								<AccordionComponent date={order.createdAt} title={order.id}>
 									<h3 class="font-work-sans font-semibold text-3xl mb-2">Cart</h3>
 									<div class="carousel gap-6 max-w-full py-2">
 										{#each order.items as orderItem}
-											<div class="grid grid-cols-1 w-64 bg-white shadow rounded-md overflow-hidden">
-												<figure class=" max-h-[200px] relative w-full">
-													<div
-														class="badge {orderItem.variant.product.category?.name === 'Jeans'
-															? 'badge-primary text-black'
-															: 'badge-ghost'} absolute right-3 top-4"
-													>
-														{orderItem.variant.product.category?.name}
-													</div>
-													<img
-														class="w-full aspect-square h-full object-cover"
-														src={orderItem.variant.product.featuredImage.url}
-														alt={orderItem.variant.product.name}
-													/>
-												</figure>
-												<div class=" pb-8 pt-1 px-2 grid grid-cols-1 gap-2">
-													<div class="flex justify-between">
-														<h2 class="line-clamp-1 text-lg font-work-sans text-black font-medium">
-															{orderItem.quantity} x {orderItem.variant.product.name}
-														</h2>
-													</div>
-
-													<div class="flex justify-between items-center w-full">
-														<p class="flex items-center gap-1 text-gray-400">
-															<span class="capitalize text-xs font-semibold">{order.status}</span>
-															<iconify-icon icon="material-symbols:pending-outline" />
-														</p>
-														<p class="text-sm font-medium">
-															{orderItem.variant.discountPrice
-																? formatCurrency(orderItem.variant.discountPrice)
-																: formatCurrency(orderItem.variant.price)}
-														</p>
-													</div>
-													<!-- <div class="card-actions j">
-													<div class="">Qty: </div>
-												</div> -->
-												</div>
-											</div>
+											<OrderItem {order} {orderItem} />
 											<!-- <h3>{orderItem.variant.name}</h3> -->
 										{/each}
 									</div>
@@ -258,7 +222,7 @@
 										<h3 class="font-work-sans font-semibold text-3xl mb-5">Billing Info</h3>
 										<div class="grid grid-cols-2 gap-">
 											<div class="flex flex-col gap-4">
-												<h4 class="font-work-sans font-semibold">Recipient Info</h4>
+												<h4 class="font-work-sans font-semibold">Recipient</h4>
 												<p class="flex flex-col">
 													<span>{order.firstName} {order.lastName}</span>
 													<span>{order.phoneNumber}</span>

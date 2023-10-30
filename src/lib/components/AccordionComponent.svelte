@@ -1,22 +1,20 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
-	import type { orderWithItems } from '../types/order.type';
 
 	export let title: string | undefined;
 	export let date: Date | undefined;
-
-	let showMore: boolean = false;
-	export let order: orderWithItems;
 
 	let isOpen: boolean = false;
 
 	const toggleOpen = () => {
 		isOpen = !isOpen;
 	};
+
+	// change color based on order status enum
 </script>
 
 <div>
-	<div class="w-full bg-white shadow rounded grid grid-cols-1 gap-14">
+	<div class="w-full bg-white {isOpen ? 'border' : 'shadow'} rounded grid grid-cols-1 gap-14">
 		<div class="p-5">
 			<button
 				on:click={toggleOpen}
@@ -26,7 +24,13 @@
 				{#if date}
 					<p class="font-jakarta text-center text-gray-500">{date.toLocaleDateString()}</p>
 				{/if}
-				<span><iconify-icon width="25" icon="iconamoon:arrow-down-2-light" /></span>
+				<span
+					><iconify-icon
+						rotate={isOpen && '180deg'}
+						width="25"
+						icon="iconamoon:arrow-down-2-light"
+					/></span
+				>
 			</button>
 		</div>
 
