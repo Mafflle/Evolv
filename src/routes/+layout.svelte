@@ -4,10 +4,11 @@
 	import { currentUser } from '$lib/stores/user.stores';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
+	import { page, navigating } from '$app/stores';
 	import { showToastr, type ToastType } from '$lib/utils';
 	import { Toaster } from 'svelte-french-toast';
 	import { initializeCart } from '../lib/stores/cart.stores';
+	import PageLoader from '../lib/components/PageLoader.svelte';
 
 	export let data;
 
@@ -28,3 +29,7 @@
 
 <Toaster />
 <slot />
+
+{#if !!$navigating}
+	<PageLoader />
+{/if}
