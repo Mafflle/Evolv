@@ -30,7 +30,10 @@
 			>
 				{product.name}
 			</h3>
+			<p class="bg-elightpurple/20 px-2 py-1 text-xs rounded-full">{product.category?.name}</p>
+		</div>
 
+		<div class="flex justify-between w-full items-center">
 			<p class="lg:text-base text-sm">
 				{#if product.variants[0].discountPrice}
 					<span class="line-through italic text-xs"
@@ -39,20 +42,9 @@
 				{/if}
 				{formatCurrency(product.variants[0].discountPrice ?? product.variants[0].price)}
 			</p>
-		</div>
-
-		<div class="flex justify-between w-full items-center">
-			<p class="bg-elightpurple/20 px-2 py-1 text-xs rounded-full">{product.category?.name}</p>
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-				><path
-					fill="none"
-					stroke="currentColor"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="1.5"
-					d="m19.26 9.696l1.385 9A2 2 0 0 1 18.67 21H5.33a2 2 0 0 1-1.977-2.304l1.385-9A2 2 0 0 1 6.716 8h10.568a2 2 0 0 1 1.977 1.696ZM14 5a2 2 0 1 0-4 0M8.992 15h3m3 0h-3m0 0v-3m0 3v3"
-				/></svg
-			>
+			<button>
+				<iconify-icon icon="tabler:heart-plus" width="24" />
+			</button>
 		</div>
 	</div>
 </div>

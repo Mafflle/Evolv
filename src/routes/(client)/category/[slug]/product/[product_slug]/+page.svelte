@@ -133,6 +133,7 @@
 							if (quantityToBuy > 0) {
 								addToCart(activeVariant, quantityToBuy);
 								quantityToBuy = 0;
+								showToastr('Added to cart', 'success');
 							} else showToastr('Please select a quantity to buy', 'error');
 						}}
 					>
