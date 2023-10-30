@@ -212,7 +212,7 @@
 			duration: 450,
 			easing: cubicIn
 		}}
-		class="md:hidden fixed h-screen w-screen top-0 z-10 bg-black text-white p-5 font-universo"
+		class="md:hidden fixed h-screen w-screen top-0 z-20 bg-black text-white p-5 font-universo"
 	>
 		<div class="flex justify-between items-center">
 			<a href="/">
