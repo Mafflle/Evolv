@@ -1,14 +1,6 @@
 <script lang="ts">
-	import ProductCard from '../../../../lib/components/ProductCard.svelte';
-	import type { PageData } from './$types';
-
-	export let data: PageData;
-
-	let favourites = data.favourites;
-
-	$: {
-		favourites = data.favourites;
-	}
+	import ProductCard from '$lib/components/ProductCard.svelte';
+	import { currentUser } from '$lib/stores/user.stores';
 </script>
 
 <svelte:head>
@@ -22,7 +14,7 @@
 		<div
 			class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center w-full md:gap-5 gap-10 py-3"
 		>
-			{#each favourites as product}
+			{#each $currentUser?.favourites || [] as product}
 				<ProductCard {product} />
 			{/each}
 		</div>

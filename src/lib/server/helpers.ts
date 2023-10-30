@@ -12,7 +12,17 @@ export const fetchUser = async (id: string): Promise<UserWithRelations | null> =
 					items: true
 				}
 			},
-			favourites: true
+			favourites: {
+				include: {
+					featuredImage: true,
+					category: true,
+					variants: {
+						include: {
+							images: true
+						}
+					}
+				}
+			}
 		}
 	});
 
