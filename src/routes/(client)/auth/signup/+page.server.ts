@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { auth } from '$lib/server/lucia';
 import { Role } from '$lib/types/roles.types';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { fetchUser, fetchUser } from '../../../../lib/server/helpers';
+import { fetchUser } from '$lib/server/helpers';
 
 export const load = (async () => {
 	return {};

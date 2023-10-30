@@ -1,10 +1,22 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { enhance } from '$app/forms';
 	import { currentUser } from '$lib/stores/user.stores';
 
 	let openOptions = false;
 
 	const toggleOptions = () => {
 		openOptions = !openOptions;
+	};
+
+	const logoutCallback = () => {
+		return async ({ result, update }) => {
+			try {
+				if (browser) localStorage.removeItem('cart');
+			} finally {
+				update();
+			}
+		};
 	};
 </script>
 
@@ -21,7 +33,12 @@
 				<li class="px-5 py-1 hover:bg-slate-300 cursor-pointer">
 					<a on:click={toggleOptions} href="/account">Account</a>
 				</li>
-				<form class="px-5 py-1 hover:bg-slate-300" action="/?/logout" method="post">
+				<form
+					class="px-5 py-1 hover:bg-slate-300"
+					action="/?/logout"
+					method="post"
+					use:enhance={logoutCallback}
+				>
 					<button class=" cursor-pointer">Logout</button>
 				</form>
 			</ol>

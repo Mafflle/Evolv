@@ -31,11 +31,12 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions: Actions = {
-	logout: async ({ locals }) => {
+	logout: async ({ locals, cookies }) => {
 		const session = await locals.auth.validate();
 		if (!session) return fail(400);
 		await auth.invalidateSession(session.sessionId);
 		locals.auth.setSession(null);
+
 		throw redirect(302, '/auth/login');
 	},
 

@@ -20,7 +20,7 @@
 	<h3 class="text-3xl text-black font-medium">Sign Up</h3>
 
 	<form
-		class="max-w-md w-full h-full px-5 py-10 grid grid-cols-1 gap-4"
+		class="max-w-md w-full px-5 py-10 grid grid-cols-1 gap-4"
 		action=""
 		method="post"
 		use:enhance={() => {
