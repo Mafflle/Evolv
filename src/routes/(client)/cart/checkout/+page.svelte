@@ -3,6 +3,7 @@
 	import { calculateCartTotal, cartStore } from '$lib/stores/cart.stores';
 	import type { PageData } from './$types';
 	import { enhance } from '$app/forms';
+	import { LoaderIcon } from 'svelte-french-toast';
 	let cartTotal: number = 0;
 
 	$: cartTotal = calculateCartTotal($cartStore);
@@ -11,11 +12,16 @@
 	export let form;
 
 	let loading = false;
+	let paymentProcessing = false;
 </script>
 
 <svelte:head>
 	<title>Checkout Cart - Evolv</title>
 </svelte:head>
+
+{#if paymentProcessing}
+	<LoaderIcon />
+{/if}
 
 <div class="bg-gray-100 min-h-screen py-8">
 	<div class="max-w-7xl mx-auto md:px-10 px-5 my-[60px]" role="contentinfo">
@@ -31,7 +37,10 @@
 						if (result.status === 200) {
 							localStorage.removeItem('cart');
 							cartStore.set({ items: [] });
-							showToastr('Order placed successfully', 'success');
+
+							let url = result.data.payment_url;
+							paymentProcessing = true;
+							window.location.href = url;
 						} else if (result.data.errors.server) {
 							result.data.errors.server.forEach((error) => {
 								showToastr(error, 'error');
@@ -61,7 +70,7 @@
 										name="first-name"
 										id="first-name"
 									/>
-									{#if form?.errors.firstName}
+									{#if form?.errors?.firstName}
 										{#each form.errors.firstName as error}
 											<p class="form-error">{error}</p>
 										{/each}
@@ -76,7 +85,7 @@
 										name="last-name"
 										id="last-name"
 									/>
-									{#if form?.errors.lastName}
+									{#if form?.errors?.lastName}
 										{#each form.errors.lastName as error}
 											<p class="form-error">{error}</p>
 										{/each}
@@ -91,7 +100,7 @@
 										name="phone-number"
 										id="phone-number"
 									/>
-									{#if form?.errors.phoneNumber}
+									{#if form?.errors?.phoneNumber}
 										{#each form.errors.phoneNumber as error}
 											<p class="form-error">{error}</p>
 										{/each}
@@ -114,7 +123,7 @@
 										name="street-address"
 										id="street-address"
 									/>
-									{#if form?.errors.street}
+									{#if form?.errors?.street}
 										{#each form.errors.street as error}
 											<p class="form-error">{error}</p>
 										{/each}
@@ -131,7 +140,7 @@
 										name="city"
 										id="city"
 									/>
-									{#if form?.errors.city}
+									{#if form?.errors?.city}
 										{#each form.errors.city as error}
 											<p class="form-error">{error}</p>
 										{/each}
@@ -146,7 +155,7 @@
 										name="state"
 										id="state"
 									/>
-									{#if form?.errors.state}
+									{#if form?.errors?.state}
 										{#each form.errors.state as error}
 											<p class="form-error">{error}</p>
 										{/each}
@@ -161,7 +170,7 @@
 										name="country"
 										id="country"
 									/>
-									{#if form?.errors.country}
+									{#if form?.errors?.country}
 										{#each form.errors.country as error}
 											<p class="form-error">{error}</p>
 										{/each}
@@ -176,7 +185,7 @@
 										name="zip"
 										id="zip"
 									/>
-									{#if form?.errors.zip}
+									{#if form?.errors?.zip}
 										{#each form.errors.zip as error}
 											<p class="form-error">{error}</p>
 										{/each}

@@ -2,8 +2,12 @@ import { redirect, type Actions, fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { z } from 'zod';
 import type { CartStore } from '$lib/types/cart.types';
-import prisma from '../../../../lib/server/prisma';
-import { calculateCartTotal } from '../../../../lib/stores/cart.stores';
+import prisma from '$lib/server/prisma';
+import { calculateCartTotal } from '$lib/stores/cart.stores';
+import { PRIVATE_PAYSTACK_SECRET_KEY } from '$env/static/private';
+
+import axios from 'axios';
+import { getShippingFee } from '../../../../lib/server/helpers';
 
 const schema = z.object({
 	firstName: z
@@ -66,7 +70,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ locals, request }) => {
+	default: async ({ locals, request, url }) => {
 		const session = await locals.auth.validate();
 
 		if (!session) {
@@ -108,6 +112,8 @@ export const actions: Actions = {
 			const validatedData = schema.parse(dataToValidate);
 
 			if (session) {
+				let totalPrice = calculateCartTotal(cart);
+
 				const order = await prisma.order.create({
 					data: {
 						...validatedData,
@@ -116,7 +122,7 @@ export const actions: Actions = {
 								id: session.user.userId
 							}
 						},
-						totalPrice: calculateCartTotal(cart)
+						totalPrice
 					}
 				});
 
@@ -138,6 +144,45 @@ export const actions: Actions = {
 					});
 				});
 
+				let shippingFee = await getShippingFee();
+				let amountToPay = (totalPrice + shippingFee) * 100;
+				let paymentReference = `order-${order.id}-${Date.now()}`;
+
+				let data = {
+					reference: paymentReference,
+					amount: amountToPay,
+					email: session.user.email,
+					callback_url: `${url.origin}/cart/checkout/success`
+				};
+
+				let headers = {
+					Authorization: `Bearer ${PRIVATE_PAYSTACK_SECRET_KEY}`,
+					'Content-Type': 'application/json'
+				};
+
+				let response = await axios.post('https://api.paystack.co/transaction/initialize', data, {
+					headers
+				});
+				let responseData = response.data;
+
+				if (responseData.status === false) {
+					return fail(400, {
+						message: 'Oops! Something went wrong',
+						errors: {
+							server: ['Oops! Something went wrong']
+						}
+					});
+				}
+
+				await prisma.order.update({
+					where: {
+						id: order.id
+					},
+					data: {
+						paymentRef: responseData.data.reference
+					}
+				});
+
 				const orderWithItems = await prisma.order.findUnique({
 					where: {
 						id: order.id
@@ -156,7 +201,9 @@ export const actions: Actions = {
 				});
 
 				return {
-					order: orderWithItems
+					order: orderWithItems,
+					payment_url: responseData.data.authorization_url,
+					message: 'Order created successfully'
 				};
 			}
 		} catch (error) {
@@ -172,6 +219,7 @@ export const actions: Actions = {
 				return fail(400, toSend);
 			}
 
+			console.log(error);
 			return fail(500, toSend);
 		}
 	}

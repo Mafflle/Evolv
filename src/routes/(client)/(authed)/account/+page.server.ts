@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 import { z } from 'zod';
 import prisma from '$lib/server/prisma';
 import type { orderWithItems } from '$lib/types/order.type';
-import { fetchUser } from '$lib/server/helpers';
+import { fetchUser, getShippingFee } from '$lib/server/helpers';
 
 const profileSchema = z.object({
 	email: z
@@ -49,15 +49,18 @@ export const load = (async ({ locals }) => {
 							}
 						}
 					}
-				},
-				orderBy: {
-					createdAt: 'desc'
 				}
 			}
+		},
+		orderBy: {
+			createdAt: 'desc'
 		}
 	});
+
+	const shippingFee = await getShippingFee();
 	return {
-		orders: orders as orderWithItems[]
+		orders: orders as orderWithItems[],
+		shippingFee
 	};
 }) satisfies PageServerLoad;
 

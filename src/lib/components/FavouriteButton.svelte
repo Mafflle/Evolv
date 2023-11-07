@@ -9,10 +9,8 @@
 
 	let isFavourite = false;
 
-	$: isFavourite = $currentUser && $currentUser.favourites.some((fav) => fav.id === product.id);
-	$: console.log(
-		`${product.name} is ${isFavourite ? '' : 'not'} favourite for ${$currentUser?.firstName}`
-	);
+	$: isFavourite =
+		$currentUser && $currentUser.favourites.some((fav) => fav.id === product.id) ? true : false;
 </script>
 
 <form

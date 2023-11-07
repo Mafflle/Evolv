@@ -28,3 +28,7 @@ export const fetchUser = async (id: string): Promise<UserWithRelations | null> =
 
 	return user;
 };
+
+export const getShippingFee = async (): Promise<number> => {
+	return 1000;
+};

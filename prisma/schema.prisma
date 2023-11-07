@@ -171,6 +171,7 @@ model Order {
 
   items      OrderItem[]
   totalPrice Float       @map("total_price")
+  paymentRef String?     @unique @map("payment_ref")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")

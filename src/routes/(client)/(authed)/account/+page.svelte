@@ -5,14 +5,12 @@
 	import { formatCurrency, showToastr } from '$lib/utils';
 	import { enhance } from '$app/forms';
 	import AccordionComponent from '$lib/components/AccordionComponent.svelte';
-	import OrderItem from '../../../../lib/components/OrderItem.svelte';
+	import OrderItem from '$lib/components/OrderItem.svelte';
 
 	export let data: PageData;
 	export let form;
 
 	const { orders } = data;
-
-	console.log(orders);
 
 	let profileEditable = false;
 	let loading: boolean = false;
@@ -243,11 +241,11 @@
 										</div>
 										<div class="flex justify-between mb-2 flex-wrap">
 											<span>Subtotal:</span>
-											<span>{formatCurrency(order.totalPrice - 1000)}</span>
+											<span>{formatCurrency(order.totalPrice)}</span>
 										</div>
 										<div class="flex justify-between mb-2 flex-wrap">
 											<span class="font-medium">Shipping:</span>
-											<span>{formatCurrency(1000)}</span>
+											<span>{formatCurrency(data.shippingFee)}</span>
 										</div>
 										<hr class="my-4 bg-black" />
 										<div class="flex justify-between mb-2 flex-wrap">
