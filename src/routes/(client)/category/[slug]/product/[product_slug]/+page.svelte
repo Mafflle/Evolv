@@ -12,6 +12,7 @@
 	let product = data.product as ProductWithRelations;
 	let relatedProducts = data.relatedProducts as ProductWithRelations[];
 	let activeVariant = product.variants[0] as VariantWithRelations;
+	let variantSelected = false;
 	let images: Image[] = [];
 	let quantityToBuy = 0;
 
@@ -33,9 +34,11 @@
 	}
 
 	$: {
-		images = [product.featuredImage];
+		if (variantSelected) {
+			// images = [product.featuredImage];
 
-		images = [...activeVariant.images];
+			images = [...activeVariant.images];
+		}
 	}
 </script>
 
@@ -52,7 +55,7 @@
 				<img
 					style="aspect-ratio: 4/3"
 					class="md:w-full w-[70%] object-cover h-auto md:h-full cursor-pointer"
-					src={product?.featuredImage.url}
+					src={variantSelected ? activeVariant.images[0].url : product?.featuredImage.url}
 					alt=""
 				/>
 
@@ -90,6 +93,7 @@
 							<button
 								on:click={() => {
 									activeVariant = variant;
+									variantSelected = true;
 								}}
 								class="{activeVariant.name === variant.name
 									? 'bg-black text-white'

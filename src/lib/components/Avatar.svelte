@@ -33,6 +33,11 @@
 				<li class="px-5 py-1 hover:bg-slate-300 cursor-pointer">
 					<a on:click={toggleOptions} href="/account">Account</a>
 				</li>
+				{#if $currentUser?.role === 'ADMIN'}
+					<li class="px-5 py-1 hover:bg-slate-300 cursor-pointer min-w-max">
+						<a on:click={toggleOptions} href="/admin">Admin Panel</a>
+					</li>
+				{/if}
 				<form
 					class="px-5 py-1 hover:bg-slate-300"
 					action="/?/logout"
