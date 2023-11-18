@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="grid grid-cols-1 w-64 bg-white shadow rounded-md">
+<div class="grid grid-cols-1 w-full bg-white shadow rounded-md">
 	<figure class=" max-h-[200px] relative w-full rounded-t-md overflow-hidden">
 		<div
 			class="badge {orderItem.variant.product.category?.name === 'Jeans'
