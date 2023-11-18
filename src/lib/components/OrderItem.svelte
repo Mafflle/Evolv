@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { OrderStatus } from '@prisma/client';
 	import type { orderWithItems } from '../types/order.type';
-	import { formatCurrency } from '../utils';
+	import { formatCurrency, getStatusClass } from '../utils';
 
 	export let orderItem: any;
 	export let order: orderWithItems;
@@ -55,17 +55,7 @@
 		</div>
 
 		<div class="flex justify-between items-center w-full group">
-			<p
-				class="flex items-center gap-1 relative {order.status === OrderStatus.PENDING
-					? 'text-yellow-500'
-					: order.status === OrderStatus.CONFIRMED
-					? 'text-green-500'
-					: order.status === OrderStatus.DELIVERED
-					? 'text-green-500'
-					: order.status === OrderStatus.CANCELLED
-					? 'text-red-500'
-					: 'text-black'}"
-			>
+			<p class="flex items-center gap-1 relative {getStatusClass(order.status)}">
 				<span class="capitalize text-xs font-semibold">{order.status}</span>
 				{#if order.status === OrderStatus.PENDING}
 					<iconify-icon icon="material-symbols:pending-outline" />

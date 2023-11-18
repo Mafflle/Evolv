@@ -2,7 +2,7 @@
 	import Tab from '$lib/components/Tab.svelte';
 	import { OrderStatus } from '@prisma/client';
 	import type { PageData } from './$types';
-	import { formatCurrency } from '$lib/utils';
+	import { formatCurrency, getStatusClass } from '$lib/utils';
 	import AdminModal from '$lib/components/AdminModal.svelte';
 	import type { orderWithItems } from '$lib/types/order.type';
 	import { slide } from 'svelte/transition';
@@ -28,8 +28,6 @@
 		viewMore = !viewMore;
 		currentOrder = order;
 	};
-
-	$: console.log(currentOrder);
 
 	console.log(data);
 </script>
@@ -81,56 +79,15 @@
 							</div>
 						</td>
 						<td>
-							<!-- <div
-								class=" flex items-center gap-1 {order.status === OrderStatus.PENDING
-									? 'text-yellow-500 '
-									: order.status === OrderStatus.CONFIRMED
-									? 'text-green-500 '
-									: order.status === OrderStatus.DELIVERED
-									? 'text-green-500 '
-									: order.status === OrderStatus.CANCELLED
-									? 'text-red-500 '
-									: 'text-black'}"
-							>
-								<span class="">{order.status} </span>
-								{#if order.status === OrderStatus.PENDING}
-									<iconify-icon icon="material-symbols:pending-outline" />
-								{:else if order.status === OrderStatus.CONFIRMED}
-									<iconify-icon icon="pepicons-pencil:checkmark-outlined" />
-								{:else if order.status === OrderStatus.DELIVERED}
-									<iconify-icon icon="mdi:truck-check-outline" />
-								{:else if order.status === OrderStatus.SHIPPED}
-									<iconify-icon icon="mdi:truck-check-outline" />
-								{:else if order.status === OrderStatus.CANCELLED}
-									<iconify-icon icon="material-symbols:cancel-outline" />
-								{/if}
-							</div> -->
 							<select
-								class="outline-none {order.status === OrderStatus.PENDING
-									? 'text-yellow-500 '
-									: order.status === OrderStatus.CONFIRMED
-									? 'text-green-500 '
-									: order.status === OrderStatus.DELIVERED
-									? 'text-green-500 '
-									: order.status === OrderStatus.CANCELLED
-									? 'text-red-500 '
-									: 'text-black'}"
+								class="outline-none cursor-pointer {getStatusClass(order.status)}"
 								bind:value={order.status}
 								name="order-status"
 								id="order-status"
 							>
 								{#each tabItems.slice(1, 6) as status}
-									<option
-										class={status.value === OrderStatus.PENDING
-											? 'text-yellow-500 '
-											: status.value === OrderStatus.CONFIRMED
-											? 'text-green-500 '
-											: status.value === OrderStatus.DELIVERED
-											? 'text-green-500 '
-											: status.value === OrderStatus.CANCELLED
-											? 'text-red-500 '
-											: 'text-black'}
-										value={status.value}>{status.value}</option
+									<option class="{getStatusClass(status.value)} cursor-pointer" value={status.value}
+										>{status.value}</option
 									>
 								{/each}
 							</select>
