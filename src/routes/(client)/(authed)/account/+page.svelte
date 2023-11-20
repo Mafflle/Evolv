@@ -14,7 +14,7 @@
 
 	let profileEditable = false;
 	let loading: boolean = false;
-	let currentTab: string = 'order-history';
+	let currentTab: string = 'account';
 	// toggle between tabs
 	const toggleTab = (tab: string) => {
 		currentTab = tab;
@@ -199,12 +199,12 @@
 					<p class="text-xs text-black/50">Check order status and manage recent orders</p>
 				</div>
 				<section class="grid grid-cols-1 gap-5">
-					<div class="w-full flex justify-between px-5 font-semibold">
-						<p class="">Order Tag</p>
-						<p>Date</p>
-						<p>More</p>
-					</div>
 					{#if orders && orders.length > 0}
+						<div class="w-full flex justify-between px-5 font-semibold">
+							<p class="">Order Tag</p>
+							<p>Date</p>
+							<p>More</p>
+						</div>
 						<div class="grid grid-cols-1 gap-10 pb-5">
 							{#each orders as order}
 								<AccordionComponent date={order.createdAt} title={order.id}>
@@ -212,6 +212,7 @@
 									<div class="carousel gap-6 max-w-full py-2">
 										{#each order.items as orderItem}
 											<OrderItem {order} {orderItem} />
+
 											<!-- <h3>{orderItem.variant.name}</h3> -->
 										{/each}
 									</div>
@@ -256,6 +257,11 @@
 								</AccordionComponent>
 							{/each}
 						</div>
+					{:else}
+						<p class="flex flex-col items-center justify-center gap-1 mt-5">
+							<iconify-icon width="50" icon="pepicons-print:cart-off" />
+							<span class="text-2xl">No orders placed yet!</span>
+						</p>
 					{/if}
 				</section>
 			</div>

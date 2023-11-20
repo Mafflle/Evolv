@@ -14,7 +14,7 @@
 			try {
 				if (browser) localStorage.removeItem('cart');
 			} finally {
-				update();
+				await update();
 			}
 		};
 	};

@@ -1,7 +1,8 @@
 import prisma from '$lib/server/prisma';
+import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from '../$types';
 
-export const load: PageServerLoad = async ({ cookies }) => {
+export const load: PageServerLoad = async () => {
 	const orders = await prisma.order.findMany({
 		include: {
 			items: {
@@ -23,4 +24,14 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	});
 
 	return { orders };
+};
+
+export const actions: Actions = {
+	'update-status': async ({ request }) => {
+		console.log('works');
+
+		return {
+			success: 'true'
+		};
+	}
 };

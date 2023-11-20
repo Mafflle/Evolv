@@ -1,4 +1,6 @@
+import type { OrderStatus } from '@prisma/client';
+
 export type Option = {
-	value: any;
+	value: string | OrderStatus;
 	label: string;
 };

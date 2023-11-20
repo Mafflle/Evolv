@@ -67,6 +67,9 @@ devDependencies:
   daisyui:
     specifier: ^3.7.6
     version: 3.7.6
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   eslint:
     specifier: ^8.28.0
     version: 8.49.0
@@ -94,6 +97,9 @@ devDependencies:
   svelte-check:
     specifier: ^3.4.3
     version: 3.5.1(postcss-load-config@4.0.1)(postcss@8.4.30)(svelte@4.2.0)
+  svelte-time:
+    specifier: ^0.8.0
+    version: 0.8.0
   tailwindcss:
     specifier: ^3.3.2
     version: 3.3.3
@@ -1075,6 +1081,10 @@ packages:
       tailwindcss: 3.3.3
     transitivePeerDependencies:
       - ts-node
+    dev: true
+
+  /dayjs@1.11.10:
+    resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
     dev: true
 
   /debug@4.3.4:
@@ -2502,6 +2512,12 @@ packages:
       strip-indent: 3.0.0
       svelte: 4.2.0
       typescript: 5.2.2
+    dev: true
+
+  /svelte-time@0.8.0:
+    resolution: {integrity: sha512-V0LBpJhYV2Q+jqiJ94ITAo51P6RIhrHQpDt3LCSk8PXfL2UMvSMlDzkqHq8mdKqmBCRZURnXhpynN03GQa/G/A==}
+    dependencies:
+      dayjs: 1.11.10
     dev: true
 
   /svelte-writable-derived@3.1.0(svelte@4.2.0):

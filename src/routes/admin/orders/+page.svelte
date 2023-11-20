@@ -3,12 +3,10 @@
 	import { OrderStatus } from '@prisma/client';
 	import type { PageData } from './$types';
 	import { formatCurrency, getStatusClass } from '$lib/utils';
-	import AdminModal from '$lib/components/AdminModal.svelte';
-	import type { orderWithItems } from '$lib/types/order.type';
-	import { slide } from 'svelte/transition';
-	import OrderItem from '$lib/components/OrderItem.svelte';
-	import { circIn } from 'svelte/easing';
 	import OrderDetails from '$lib/components/OrderDetails.svelte';
+	import { enhance } from '$app/forms';
+	import Selector from '$lib/components/Selector.svelte';
+	import { browser } from '$app/environment';
 
 	const tabItems = [
 		{ label: 'All', value: 'all' },
@@ -22,14 +20,21 @@
 	export let data: PageData;
 	const { orders } = data;
 
+	function handleSelectChange(event) {
+		if (browser) {
+			const form = document.getElementById('statusForm');
+			event.preventDefault();
+			form.submit();
+			console.log(event);
+		}
+	}
+
 	let currentOrder: any;
 	let viewMore: boolean = false;
 	const toggleModal = (order) => {
 		viewMore = !viewMore;
 		currentOrder = order;
 	};
-
-	console.log(data);
 </script>
 
 <svelte:head>
@@ -79,18 +84,34 @@
 							</div>
 						</td>
 						<td>
-							<select
-								class="outline-none cursor-pointer {getStatusClass(order.status)}"
-								bind:value={order.status}
-								name="order-status"
-								id="order-status"
+							<form
+								on:submit|preventDefault={() => console.log('submitted')}
+								id="statusForm"
+								use:enhance={({}) => {
+									console.log('starts');
+
+									return async ({ action, update }) => {
+										update();
+									};
+								}}
+								action="?/update-status"
+								method="POST"
 							>
-								{#each tabItems.slice(1, 6) as status}
-									<option class="{getStatusClass(status.value)} cursor-pointer" value={status.value}
-										>{status.value}</option
-									>
-								{/each}
-							</select>
+								<Selector
+									options={tabItems.slice(1, 6)}
+									value={order.status}
+									name="status"
+									placeholder="Select status"
+									on:statusChanged={(e) => {
+										// console.log(e);
+
+										handleSelectChange(e);
+										// if (e.detail.preventDefault) {
+										// 	e.preventDefault();
+										// }
+									}}
+								/>
+							</form>
 						</td>
 
 						<td>{formatCurrency(order.totalPrice)}</td>

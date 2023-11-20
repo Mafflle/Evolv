@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import type { Option } from '../types/select.types';
+	import { getStatusClass } from '$lib/utils';
+	import type { OrderStatus } from '@prisma/client';
 
 	export let options: Option[] = [];
-	export let value: any;
+	export let value: string | OrderStatus | null;
 	export let placeholder: string = 'Select an option';
 	export let name: string = 'select';
+	export let submitable: boolean = false;
 
 	let label: string | undefined;
 
@@ -36,6 +39,8 @@
 		toggleOpen();
 	};
 
+	const dispatch = createEventDispatcher();
+
 	onMount(() => {
 		label = options.find((option) => option.value === value)?.label;
 	});
@@ -46,7 +51,8 @@
 	<button
 		on:click={toggleOpen}
 		type="button"
-		class="form-input flex cursor-pointer hover:bg-gray-100 justify-between"
+		class="form-input flex cursor-pointer hover:bg-gray-100 justify-between {value &&
+			getStatusClass(value)}"
 	>
 		<p>{label ?? placeholder}</p>
 		<iconify-icon icon="mingcute:down-fill" width="20" />
@@ -63,15 +69,25 @@
 				>
 					<p>{placeholder}</p>
 				</button>
-				{#each visibleOptions as option}
-					<button
-						on:click={() => onSelected(option)}
-						type="button"
-						class="form-input flex cursor-pointer hover:bg-gray-100 justify-between"
-					>
-						<p>{option.label}</p>
-					</button>
-				{/each}
+				<ul>
+					{#each visibleOptions as option}
+						<li>
+							<button
+								on:click={(e) => {
+									e.preventDefault();
+									onSelected(option);
+									dispatch('statusChanged', e, { cancelable: true });
+								}}
+								type="submit"
+								class="form-input {getStatusClass(
+									option.value
+								)} flex cursor-pointer hover:bg-gray-100 justify-between"
+							>
+								<p>{option.label}</p>
+							</button>
+						</li>
+					{/each}
+				</ul>
 			</div>
 		</div>
 	{/if}
