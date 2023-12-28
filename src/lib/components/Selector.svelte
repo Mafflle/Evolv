@@ -3,6 +3,7 @@
 	import type { Option } from '../types/select.types';
 	import { getStatusClass } from '$lib/utils';
 	import type { OrderStatus } from '@prisma/client';
+	import { enhance } from '$app/forms';
 
 	export let options: Option[] = [];
 	export let value: string | OrderStatus | null;
@@ -72,19 +73,27 @@
 				<ul>
 					{#each visibleOptions as option}
 						<li>
-							<button
-								on:click={(e) => {
-									e.preventDefault();
-									onSelected(option);
-									dispatch('statusChanged', e, { cancelable: true });
+							<form
+								on:submit|preventDefault={() => console.log('submitted')}
+								id="statusForm"
+								use:enhance={({}) => {
+									console.log('starts');
+
+									return async ({ action, update }) => {
+										update();
+									};
 								}}
-								type="submit"
-								class="form-input {getStatusClass(
-									option.value
-								)} flex cursor-pointer hover:bg-gray-100 justify-between"
+								action="/?/update-status"
+								method="POST"
 							>
-								<p>{option.label}</p>
-							</button>
+								<button
+									class="form-input {getStatusClass(
+										option.value
+									)} flex cursor-pointer hover:bg-gray-100 justify-between"
+								>
+									<p>{option.label}</p>
+								</button>
+							</form>
 						</li>
 					{/each}
 				</ul>

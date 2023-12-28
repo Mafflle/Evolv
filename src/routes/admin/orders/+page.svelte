@@ -102,14 +102,6 @@
 									value={order.status}
 									name="status"
 									placeholder="Select status"
-									on:statusChanged={(e) => {
-										// console.log(e);
-
-										handleSelectChange(e);
-										// if (e.detail.preventDefault) {
-										// 	e.preventDefault();
-										// }
-									}}
 								/>
 							</form>
 						</td>

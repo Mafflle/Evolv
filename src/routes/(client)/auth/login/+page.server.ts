@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 import { z } from 'zod';
 import { auth } from '$lib/server/lucia';
 import { LuciaError } from 'lucia';
-import { fetchUser } from '../../../../lib/server/helpers';
+import { fetchUser } from '$lib/server/helpers';
 
 export const load = (async () => {
 	return {};
@@ -54,7 +54,7 @@ export const actions: Actions = {
 				user
 			};
 		} catch (error) {
-			let toSend = {
+			const toSend = {
 				message: 'Oops, something went wrong!',
 				errors: {} as Error
 			};
