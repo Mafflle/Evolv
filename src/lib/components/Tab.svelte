@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { OrderStatus } from '@prisma/client';
+	import type { OrderStatus } from '$lib/types/order.type';
 	import { onMount } from 'svelte';
 
 	export let tabItems: { label: string; value: string | OrderStatus }[] = [];

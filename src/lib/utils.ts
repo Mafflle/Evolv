@@ -1,6 +1,6 @@
 import toast from 'svelte-french-toast';
 import slugify from 'slugify';
-import { OrderStatus } from '@prisma/client';
+// import { OrderStatus } from './types/order.type';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info' | undefined | null;
 
@@ -56,17 +56,17 @@ export const formatCurrency = (amount: number) => {
 		.replace('NGN', '₦');
 };
 
-export const getStatusClass = (status: OrderStatus | string) => {
+export const getStatusClass = (status: string) => {
 	switch (status) {
-		case OrderStatus.CANCELLED:
+		case 'CANCELLED':
 			return 'text-red-500';
-		case OrderStatus.PENDING:
+		case 'PENDING':
 			return 'text-yellow-500';
-		case OrderStatus.DELIVERED:
+		case 'DELIVERED':
 			return 'text-green-700';
-		case OrderStatus.CONFIRMED:
+		case 'CONFIRMED':
 			return 'text-green-500';
-		case OrderStatus.SHIPPED:
+		case 'SHIPPED':
 			return 'text-eblue';
 		default:
 			return 'text-black';

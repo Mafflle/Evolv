@@ -2,7 +2,7 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import type { Option } from '../types/select.types';
 	import { getStatusClass } from '$lib/utils';
-	import type { OrderStatus } from '@prisma/client';
+	import type { OrderStatus } from '$lib/types/order.type';
 	import { enhance } from '$app/forms';
 
 	export let options: Option[] = [];

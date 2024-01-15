@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { OrderStatus } from '@prisma/client';
+	import { OrderStatus } from '../types/order.type';
 	import type { orderWithItems } from '../types/order.type';
 	import { formatCurrency, getStatusClass } from '../utils';
 

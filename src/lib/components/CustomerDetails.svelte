@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { formatCurrency, getStatusClass } from '$lib/utils';
-	import { OrderStatus, type User } from '@prisma/client';
+	import { OrderStatus } from '$lib/types/order.type';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import AccordionComponent from './AccordionComponent.svelte';

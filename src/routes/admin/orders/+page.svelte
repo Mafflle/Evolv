@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Tab from '$lib/components/Tab.svelte';
-	import { OrderStatus } from '@prisma/client';
+	import { OrderStatus } from '$lib/types/order.type';
 	import type { PageData } from './$types';
-	import { formatCurrency, getStatusClass } from '$lib/utils';
+	import { formatCurrency } from '$lib/utils';
 	import OrderDetails from '$lib/components/OrderDetails.svelte';
 	import { enhance } from '$app/forms';
 	import Selector from '$lib/components/Selector.svelte';

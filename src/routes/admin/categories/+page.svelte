@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import AdminModal from '$lib/components/AdminModal.svelte';
-	import type { CategoryWithProductCount } from '../../../lib/types/categories.types';
-	import { showToastr } from '../../../lib/utils';
+	import type { CategoryWithProductCount } from '$lib/types/categories.types';
+	import { showToastr } from '$lib/utils';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
