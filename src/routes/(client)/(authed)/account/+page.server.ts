@@ -41,6 +41,7 @@ export const load = (async ({ locals }) => {
 				include: {
 					variant: {
 						include: {
+							images: true,
 							product: {
 								include: {
 									category: true,

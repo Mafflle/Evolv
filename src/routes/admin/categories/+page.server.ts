@@ -3,7 +3,7 @@ import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 import { uploadMedia } from '$lib/server/upload';
 import prisma from '$lib/server/prisma';
-import { generateSlug } from '../../../lib/utils';
+import { generateSlug } from '$lib/utils';
 
 export const load = (async () => {
 	const categories = await prisma.category.findMany({

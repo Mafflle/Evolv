@@ -13,7 +13,7 @@ const include = {
 	}
 };
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async () => {
 	const products = await prisma.product.findMany({
 		include,
 		orderBy: {

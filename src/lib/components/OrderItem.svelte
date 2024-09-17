@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { OrderStatus } from '@prisma/client';
+	import { OrderStatus } from '../types/order.type';
 	import type { orderWithItems } from '../types/order.type';
-	import { formatCurrency } from '../utils';
+	import { formatCurrency, getStatusClass } from '../utils';
 
 	export let orderItem: any;
-	export let order: orderWithItems;
+	export let order: any;
 
 	let tooltip: string = '';
 
@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="grid grid-cols-1 w-64 bg-white shadow rounded-md">
+<div class="grid grid-cols-1 carousel-item bg-white shadow rounded-md">
 	<figure class=" max-h-[200px] relative w-full rounded-t-md overflow-hidden">
 		<div
 			class="badge {orderItem.variant.product.category?.name === 'Jeans'
@@ -43,29 +43,19 @@
 		</div>
 		<img
 			class="w-full aspect-square h-full object-cover"
-			src={orderItem.variant.product.featuredImage.url}
+			src={orderItem.variant.images[0].url}
 			alt={orderItem.variant.product.name}
 		/>
 	</figure>
 	<div class=" pb-8 pt-1 px-2 grid grid-cols-1 gap-2">
 		<div class="flex justify-between">
 			<h2 class="line-clamp-1 text-lg font-work-sans text-black font-medium">
-				{orderItem.quantity} x {orderItem.variant.product.name}
+				{orderItem.quantity} x {orderItem.variant.product.name}({orderItem.variant.name})
 			</h2>
 		</div>
 
 		<div class="flex justify-between items-center w-full group">
-			<p
-				class="flex items-center gap-1 relative {order.status === OrderStatus.PENDING
-					? 'text-yellow-500'
-					: order.status === OrderStatus.CONFIRMED
-					? 'text-green-500'
-					: order.status === OrderStatus.DELIVERED
-					? 'text-green-500'
-					: order.status === OrderStatus.CANCELLED
-					? 'text-red-500'
-					: 'text-black'}"
-			>
+			<p class="flex items-center gap-1 relative {getStatusClass(order.status)}">
 				<span class="capitalize text-xs font-semibold">{order.status}</span>
 				{#if order.status === OrderStatus.PENDING}
 					<iconify-icon icon="material-symbols:pending-outline" />

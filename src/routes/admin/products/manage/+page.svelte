@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { Category, Variant } from '@prisma/client';
+	import type { Category } from '@prisma/client';
 	import type { Option } from '$lib/types/select.types';
 	import Selector from '$lib/components/Selector.svelte';
 	import { enhance } from '$app/forms';

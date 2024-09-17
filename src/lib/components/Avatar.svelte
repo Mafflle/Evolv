@@ -14,7 +14,7 @@
 			try {
 				if (browser) localStorage.removeItem('cart');
 			} finally {
-				update();
+				await update();
 			}
 		};
 	};
@@ -44,7 +44,7 @@
 					method="post"
 					use:enhance={logoutCallback}
 				>
-					<button class=" cursor-pointer">Logout</button>
+					<button on:click={toggleOptions} class=" cursor-pointer">Logout</button>
 				</form>
 			</ol>
 		</nav>

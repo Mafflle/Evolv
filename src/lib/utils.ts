@@ -1,5 +1,6 @@
 import toast from 'svelte-french-toast';
 import slugify from 'slugify';
+// import { OrderStatus } from './types/order.type';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info' | undefined | null;
 
@@ -53,4 +54,21 @@ export const formatCurrency = (amount: number) => {
 	})
 		.format(amount)
 		.replace('NGN', '₦');
+};
+
+export const getStatusClass = (status: string) => {
+	switch (status) {
+		case 'CANCELLED':
+			return 'text-red-500';
+		case 'PENDING':
+			return 'text-yellow-500';
+		case 'DELIVERED':
+			return 'text-green-700';
+		case 'CONFIRMED':
+			return 'text-green-500';
+		case 'SHIPPED':
+			return 'text-eblue';
+		default:
+			return 'text-black';
+	}
 };
